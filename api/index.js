@@ -8,7 +8,6 @@ const route = express.Router();
 const port = process.env.PORT || 5000;
 const serveHandler = require("serve-handler");
 
-app.use(route)
 
 route.post("/send-mail", (req, res) => {
     const transporter = nodemailer.createTransport({
@@ -19,7 +18,6 @@ route.post("/send-mail", (req, res) => {
           pass: process.env.MAIL_PASS
         },
       });
-      console.log(">>>>",process.env.MAIL_PASS)
 
     const mailData = {
         from: `${req.body.name} <${req.body.email}>`,
@@ -41,6 +39,8 @@ route.get("*", (req, res) => {
         cleanUrls: true
     })
 })
+
+app.use(route)
 
 app.listen(port);
 
