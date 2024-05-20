@@ -27,7 +27,7 @@ route.post("/send-mail", async (req, res) => {
                Phone Number: ${req.body.tel}
                Email: ${req.body.email}`,
     };
-
+    console.log(">>>>", process.env.MAIL_PASS)
     await transporter.sendMail(mailData).catch(err => console.log("send mail err", err))
 
     res.redirect('/danke.html')
