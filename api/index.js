@@ -19,7 +19,7 @@ route.post("/send-mail", (req, res) => {
           pass: process.env.MAIL_PASS
         },
       });
-      console.log(process.env.MAIL_PASS)
+      console.log(">>>>",process.env.MAIL_PASS)
 
     const mailData = {
         from: `${req.body.name} <${req.body.email}>`,
