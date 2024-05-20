@@ -4,12 +4,11 @@ const nodemailer = require('nodemailer');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-const route = express.Router();
 const port = process.env.PORT || 5000;
 const serveHandler = require("serve-handler");
 
 
-route.post("/send-mail", async (req, res) => {
+app.post("/send-mail", async (req, res) => {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -27,20 +26,19 @@ route.post("/send-mail", async (req, res) => {
                Phone Number: ${req.body.tel}
                Email: ${req.body.email}`,
     };
-    console.log(">>>>", process.env.MAIL_PASS)
+    
     await transporter.sendMail(mailData).catch(err => console.log("send mail err", err))
 
     res.redirect('/danke.html')
 
 })
 
-route.get("*", (req, res) => {
+app.get("*", (req, res) => {
     serveHandler(req, res, {
         cleanUrls: true
     })
 })
 
-app.use(route)
 
 app.listen(port);
 
