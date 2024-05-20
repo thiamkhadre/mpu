@@ -9,15 +9,15 @@ const port = process.env.PORT || 5000;
 const serveHandler = require("serve-handler");
 
 
-route.post("/send-mail", (req, res) => {
+route.post("/send-mail", async (req, res) => {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
         auth: {
-          user: "abdoulkhadrethiam8@gmail.com",
-          pass: process.env.MAIL_PASS
+            user: "abdoulkhadrethiam8@gmail.com",
+            pass: process.env.MAIL_PASS
         },
-      });
+    });
 
     const mailData = {
         from: `${req.body.name} <${req.body.email}>`,
@@ -28,10 +28,10 @@ route.post("/send-mail", (req, res) => {
                Email: ${req.body.email}`,
     };
 
-    transporter.sendMail(mailData, function (err, info) {
-        if (err) console.log(err)
-        res.redirect('/danke.html')
-    });
+    await transporter.sendMail(mailData).catch(err => console.log("send mail err", err))
+
+    res.redirect('/danke.html')
+
 })
 
 route.get("*", (req, res) => {
